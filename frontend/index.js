@@ -24,13 +24,15 @@ import {
 } from 'CommonUtil/CommonUtil.js';
 import MSNotification from 'MSNotification/MSNotification.js';
 import rootReducer from 'Global/RootReducer.js';
+import rowsReducer from 'store/reducers/rowsReducer.js';
 // Initialize store
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   combineReducers({
     app:rootReducer,
-    routing: routerReducer
+    routing: routerReducer,
+    rows: rowsReducer,
   }),
   {}, /* initial state */
   // redux-devtools extension

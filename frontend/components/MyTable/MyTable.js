@@ -1,5 +1,7 @@
 import React from 'react';
 import * as Table from 'reactabular-table';
+import { connect } from 'react-redux';
+import { sortColumn } from 'store/actions/sortActions';
 
 const rows = [
   {id: 100, name: 'John', tools: {hammer: true}, country: 'fi'},
@@ -27,8 +29,11 @@ const columns = [
       label: 'Name',
       transforms: [
         label => ({
-          onClick: () => console.log(`clicked ${label}`)
-        })
+          onClick: () => {
+            console.log(`clicked ${label}`);
+            this.props.sortColumn('name');
+          }
+        }),
       ]
     }
   },
@@ -66,7 +71,7 @@ const columns = [
   }
 ];
 
-export default class MyTable extends React.Component {
+export class MyTable extends React.Component {
   componentDidMount() {
   }
 
@@ -82,8 +87,22 @@ export default class MyTable extends React.Component {
          className="table table-striped table-bordered"
          columns={columns} >
         <Table.Header />
-        <Table.Body rows={rows} rowKey="id" />
+        <Table.Body rows={this.props.rows} rowKey="id" />
       </Table.Provider>
     );
   }
+
 }
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    rows: state.rows,
+  };
+}
+
+const mapDispatchToProps = {
+  sortColumn
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyTable);
