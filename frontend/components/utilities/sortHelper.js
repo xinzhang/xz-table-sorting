@@ -1,6 +1,6 @@
 function dynamicSort(property) {
   var sortOrder = 1;
-  if(property[0] === "-") {
+  if(property === "-") {
       sortOrder = -1;
       property = property.substr(1);
   }
@@ -11,5 +11,7 @@ function dynamicSort(property) {
 }
 
 export default function sorter(rows, columnName) {
-  return this.rows.sort(dynamicSort(columnName));
+  console.log(columnName);
+  rows.sort(dynamicSort(columnName));
+  return rows;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Table from 'reactabular-table';
 import { connect } from 'react-redux';
-import { sortColumn } from 'store/actions/sortActions';
+import MyHeader from 'MyTable/MyHeader.js';
 
 const rows = [
   {id: 100, name: 'John', tools: {hammer: true}, country: 'fi'},
@@ -29,10 +29,7 @@ const columns = [
       label: 'Name',
       transforms: [
         label => ({
-          onClick: () => {
-            console.log(`clicked ${label}`);
-            this.props.sortColumn('name');
-          }
+          children: <MyHeader name='name' />
         }),
       ]
     }
@@ -43,7 +40,7 @@ const columns = [
       label: 'Active',
       transforms: [
         label => ({
-          onClick: () => console.log(`clicked ${label}`)
+          children: <MyHeader name='tools' />
         })
       ]
     },
@@ -59,7 +56,7 @@ const columns = [
       label: 'Country',
       transforms: [
         label => ({
-          onClick: () => console.log(`clicked ${label}`)
+          children: <MyHeader name='country' />          
         })
       ]
     },
@@ -81,6 +78,10 @@ export class MyTable extends React.Component {
     };
   }
 
+  componentWillReceiveProps(props, nextProps) {
+    console.log(props, nextProps);
+  }
+
   render() {
     return (
       <Table.Provider
@@ -95,14 +96,10 @@ export class MyTable extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log('mapstate to props', state.rows);
   return {
     rows: state.rows,
   };
 }
 
-const mapDispatchToProps = {
-  sortColumn
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyTable);
+export default connect(mapStateToProps)(MyTable);

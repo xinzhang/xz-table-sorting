@@ -3,11 +3,11 @@ import sortHelper from 'utilities/sortHelper';
 
 const initalState = [
     {id: 100, name: 'John', tools: {hammer: true}, country: 'fi'},
-    {id: 101, name: 'Jack', tools: {hammer: false}, country: 'dk'},
-    {id: 102, name: 'Jack', tools: {hammer: false}, country: 'dk'},
-    {id: 103, name: 'Jack', tools: {hammer: false}, country: 'dk'},
-    {id: 104, name: 'Jack', tools: {hammer: false}, country: 'dk'},
-    {id: 105, name: 'Jack', tools: {hammer: false}, country: 'dk'}
+    {id: 101, name: 'Xin', tools: {hammer: false}, country: 'dk'},
+    {id: 102, name: 'Ab', tools: {hammer: false}, country: 'dk'},
+    {id: 103, name: 'Smith', tools: {hammer: false}, country: 'dk'},
+    {id: 104, name: 'Tala', tools: {hammer: false}, country: 'dk'},
+    {id: 105, name: 'Dunton', tools: {hammer: false}, country: 'dk'}
 ];
 
 
