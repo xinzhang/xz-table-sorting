@@ -8,15 +8,17 @@ function setSortOrder(sorts, column) {
 
   if (!found) {
     // first time, make this primary.
-    sorts.unshift( {name: column, order: 'asc' });
-
+    sorts.unshift( {name: column, order: 'asc' });    
   } else if (found.order === 'asc') {
     // click from the asc, goes to desc
     found.order = 'desc'
+    
   } else if (found.order === 'desc') {
     // the column should be removed.
-    sorts = [...sorts.filter(item => item !== found)];
+    return [...sorts.filter(item => item !== found)];
   }
+
+  return [...sorts];
 }
 
 function getSortOrder(sorts) {
@@ -38,8 +40,9 @@ const initalState = {
 export default function rootReducer(state = initalState, action) {  
   switch (action.type) {
     case actions.SORT_COLUMN:
-      setSortOrder(state.sorts, action.columnSortInfo);      
-      state.rows = sortHelper(state.rows, ...getSortOrder(state.sorts));
+      const sortorders = setSortOrder(state.sorts, action.columnSortInfo);
+      state.sorts = sortorders;
+      state.rows = sortHelper(state.rows, ...getSortOrder(sortorders));
     default:
       state = state;
   }
