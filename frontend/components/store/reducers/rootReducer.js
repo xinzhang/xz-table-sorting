@@ -1,14 +1,12 @@
 import * as actions from 'store/actions/sortActions';
 import sortHelper from 'utilities/sortHelper';
-import rows from 'Mockup/rows.js'
+import rows from 'Mockup/people.js'
 
-const sorts = {
-  id: 'asc'
-}
+console.log(rows);
 
 const initalState = {
   rows,
-  sorts
+  sorts: {}
 }
 
 function setSortOrder(sorts, column) {
@@ -25,7 +23,7 @@ function getSortOrder(sorts, column) {
   return (sorts[column] === 'desc') ? `-${column}` : column;
 }
 
-export default function rowsReducer(state = initalState, action) {  
+export default function rootReducer(state = initalState, action) {  
   switch (action.type) {
     case actions.SORT_COLUMN:
       state.sorts = setSortOrder(state.sorts, action.columnSortInfo);      
