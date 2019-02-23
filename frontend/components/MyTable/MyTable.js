@@ -36,7 +36,6 @@ export class MyTable extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapstate to props', state.data);  
   return {
     rows: [...state.data.rows],
     column: state.data.sorts || ''
