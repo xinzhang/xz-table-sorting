@@ -3,7 +3,6 @@ import * as Table from 'reactabular-table';
 import { connect } from 'react-redux';
 
 import TestComponent from 'MyTable/TestComponent.js';
-import MSGlyphicon from 'MSGlyphicon/MSGlyphicon.js';
 import columns from './Columns.js';
 
 
