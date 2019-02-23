@@ -1,21 +1,38 @@
 import * as actions from 'store/actions/sortActions';
 import sortHelper from 'utilities/sortHelper';
+import rows from 'Mockup/rows.js'
 
-const initalState = [
-    {id: 100, name: 'John', tools: {hammer: true}, country: 'fi'},
-    {id: 101, name: 'Xin', tools: {hammer: false}, country: 'dk'},
-    {id: 102, name: 'Ab', tools: {hammer: false}, country: 'dk'},
-    {id: 103, name: 'Smith', tools: {hammer: false}, country: 'dk'},
-    {id: 104, name: 'Tala', tools: {hammer: false}, country: 'dk'},
-    {id: 105, name: 'Dunton', tools: {hammer: false}, country: 'dk'}
-];
+const sorts = {
+  id: 'asc'
+}
 
+const initalState = {
+  rows,
+  sorts
+}
 
-export default function rowsReducer(state = initalState, action){
-  switch(action.type) {
-    case actions.SORT_COLUMN:
-      return sortHelper(state, action.columnSortInfo);
-    default:
-      return state;
+function setSortOrder(sorts, column) {
+  if (!sorts[column]) {
+    sorts[column] = 'asc';
+    return {...sorts}
   }
+
+  sorts[column] = (sorts[column] === 'asc') ? 'desc' : 'asc';
+  return {...sorts};
+}
+
+function getSortOrder(sorts, column) {
+  return (sorts[column] === 'desc') ? `-${column}` : column;
+}
+
+export default function rowsReducer(state = initalState, action) {  
+  switch (action.type) {
+    case actions.SORT_COLUMN:
+      state.sorts = setSortOrder(state.sorts, action.columnSortInfo);      
+      state.rows = sortHelper(state.rows, getSortOrder(state.sorts, action.columnSortInfo));
+    default:
+      state = state;
+  }
+  console.log('rowsReducer.js: rowsReducer called => ', 'finalStoreState=', state, 'action=', action);
+  return {...state};
 }

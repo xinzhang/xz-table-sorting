@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { sortColumn } from 'store/actions/sortActions';
 import {bindActionCreators} from 'redux';
+import MSGlyphicon from 'MSGlyphicon/MSGlyphicon.js';
 
 class MyHeader extends React.Component {
 
@@ -11,35 +12,43 @@ class MyHeader extends React.Component {
   }
 
   columnClick() {
-    console.log('column clicked;');
-    console.log(this.props.name);
-    this.props.sortColumn('name');
+    this.props.sortColumn(this.props.name);
   }
 
   render() {
-    return <lable onClick={this.columnClick}>{this.props.name}</lable>
+    const {name, icon} = this.props;    
+    return (
+      <lable onClick={this.columnClick}>
+        {name}        
+        <MSGlyphicon glyph={icon} className="4x" style={{marginLeft: '10px'}} />
+      </lable>
+    );
   }  
 }
 
-function mapStateToProps(state) {
-  console.log(state);  
+MyHeader.defaultProps = {
+  name: '',
+  icon: 'fa-sort', 
+}
+
+function mapStateToProps(state, ownProps) {
+  console.log("myheader mapStateToProps",  state);
+  const { sorts } = state.data;
+  const { name, style } = ownProps;
+
+  let icon = 'sort';
+
+  if (sorts[name]) {
+    icon = `sort-${sorts[name]}`;
+  }
   return {
-    rows: state.rows,
+    sorts,
+    icon
   };
 }
 
 function mapDispatchToProps(dispatch) {  
   return bindActionCreators({ sortColumn }, dispatch);
-
-  // return({
-  //   //actions: bindActionCreators(tableActions, dispatch)
-  //   sortColumn: function(columnName) {
-  //     return dispatch({
-  //       type: 'SORT_COLUMN',
-  //       columnSortInfo: columnName
-  //     });
-  //   }
-  // })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyHeader);

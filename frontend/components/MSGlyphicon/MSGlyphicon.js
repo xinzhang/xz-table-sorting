@@ -10,7 +10,7 @@ export default class MSGlyphicon extends React.Component {
 
   render() {
     return (
-      <i className={`fa fa-${this.props.glyph} fa ${this.getClassName()}`} aria-hidden="true" />
+      <i className={`fa fa-${this.props.glyph} ${this.getClassName()}`} aria-hidden="true" style={this.props.style} />
     );
   }
 }

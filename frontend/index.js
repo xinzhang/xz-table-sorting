@@ -32,7 +32,7 @@ const store = createStore(
   combineReducers({
     app:rootReducer,
     routing: routerReducer,
-    rows: rowsReducer,
+    data: rowsReducer,
   }),
   {}, /* initial state */
   // redux-devtools extension
