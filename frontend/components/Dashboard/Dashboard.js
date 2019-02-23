@@ -10,6 +10,8 @@ import {
   getRoutePath
 } from 'CommonUtil/CommonUtil.js';
 
+import MyTable from 'MyTable/MyTable.js';
+
 export class Dashboard extends React.Component {
   componentDidMount() {
   }
@@ -24,13 +26,16 @@ export class Dashboard extends React.Component {
     return (
       <div>
         <h1>Dashboard</h1>
-        <ButtonToolbar>
-          <ButtonGroup>
-            <Button onClick={() => this.context.router.push(getRoutePath('sample')) } >Go to sample page</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
         <p style={{marginTop:32}}>Place your sample below this line (Dashboard/Dashboard.js):</p>
         <hr style={{border: '1px solid black'}} />
+        <h2>Table:</h2>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-xs-12">
+              <MyTable />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

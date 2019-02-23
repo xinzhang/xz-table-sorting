@@ -1,66 +1,10 @@
 import React from 'react';
 import * as Table from 'reactabular-table';
 import { connect } from 'react-redux';
-import MyHeader from 'MyTable/MyHeader.js';
+
 import TestComponent from 'MyTable/TestComponent.js';
-import MSGlyphicon from 'MSGlyphicon/MSGlyphicon.js';
+import columns from './Columns.js';
 
-const countries = {
-  fi: 'Finland',
-  dk: 'Denmark'
-};
-
-const columns = [
-  {
-    property: 'id',
-    header: {
-      label: 'ID'
-    }
-  },
-  {
-    property: 'name',
-    header: {
-      label: 'Name',
-      transforms: [
-        label => ({
-          children: <MyHeader name='name' />
-        }),
-      ]
-    }
-  },
-  {
-    property: 'tools',
-    header: {
-      label: 'Active',
-      transforms: [
-        label => ({
-          children: <MyHeader name='tools' />
-        })
-      ]
-    },
-    cell: {
-      formatters: [
-        tools => tools.hammer ? 'Hammertime' : 'nope'
-      ]
-    }
-  },
-  {
-    property: 'country',
-    header: {
-      label: 'Country',
-      transforms: [
-        label => ({
-          children: <MyHeader name='country' />          
-        })
-      ]
-    },
-    cell: {
-      formatters: [
-        country => countries[country]
-      ]
-    }
-  }
-];
 
 export class MyTable extends React.Component {
 
@@ -77,8 +21,7 @@ export class MyTable extends React.Component {
     const c = this.props.column;
     const {column, rows} = this.props;
     return (
-      <div>
-        <MSGlyphicon glyph="sort" className="4x" />
+      <div>      
       <TestComponent column={column} /> 
       <Table.Provider
          className="table table-striped table-bordered"

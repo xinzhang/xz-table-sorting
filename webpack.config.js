@@ -170,6 +170,10 @@ module.exports = {
       }, {
         test: /\.font.(js|json)$/,
         loader: "style!css!fontgen?embed&types=woff,eot,ttf"
+      }, {
+        test: /data\/\.json$/,
+        loader: "file-loader",
+        output: 'data'
       }
     ]
   }

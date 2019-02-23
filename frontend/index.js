@@ -22,25 +22,17 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'; // rou
 import {
   getRoutePath
 } from 'CommonUtil/CommonUtil.js';
-import MSNotification from 'MSNotification/MSNotification.js';
-import rootReducer from 'Global/RootReducer.js';
-import rowsReducer from 'store/reducers/rowsReducer.js';
+
+import rootReducer from 'store/reducers/rootReducer.js';
 // Initialize store
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   combineReducers({
-    app:rootReducer,
     routing: routerReducer,
-    data: rowsReducer,
+    data: rootReducer,
   }),
-  {}, /* initial state */
-  // redux-devtools extension
-  // https://github.com/zalmoxisus/redux-devtools-extension
-  // - Install Chrome/Firefox addon
-  // - Open develop toolbar on Chrome
-  // - Or select redux `Redux DevTools` from web page
-  // - will crash IE11
+  {},
 );
 /* eslint-enable */
 
@@ -54,7 +46,6 @@ class App extends React.Component {
     // "a full width container, spanning the entire width of your viewport', quoted from bootstrap docuemntation
     return(
       <div>
-        <MSNotification />
         {this.props.children}
       </div>
     );
@@ -89,14 +80,6 @@ const rootRoute = {
     }
   },
   childRoutes: [
-    {
-      path: 'sample',
-      getComponent:(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('Sample/Sample.js').default);
-        });
-      }
-    }
   ]
 };
 const history = syncHistoryWithStore(browserHistory, store);
