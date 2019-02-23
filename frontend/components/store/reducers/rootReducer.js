@@ -3,22 +3,24 @@ import sortHelper from 'utilities/sortHelper';
 import rows from 'Mockup/people.js'
 
 function setSortOrder(sorts, column) {
-  const found = sorts.find( x=> x.name === column);
-  console.log(sorts, column, found);
+  const idx = sorts.findIndex(x => x.name === column);
+  const found = sorts[idx];
 
-  if (!found) {
+  if (idx === -1) {
     // first time, make this primary.
-    sorts.unshift( {name: column, order: 'asc' });    
+    return [ {name: column, order: 'asc' }, ...sorts ];
+    
   } else if (found.order === 'asc') {
     // click from the asc, goes to desc
-    found.order = 'desc'
-    
+    return [...sorts.slice(0, idx), 
+      { name:column, order: 'desc'}, 
+      ...sorts.slice(idx + 1)];
+
   } else if (found.order === 'desc') {
     // the column should be removed.
-    return [...sorts.filter(item => item !== found)];
+    return [...sorts.slice(0, idx),       
+      ...sorts.slice(idx + 1)];
   }
-
-  return [...sorts];
 }
 
 function getSortOrder(sorts) {
@@ -37,15 +39,17 @@ const initalState = {
   sorts: [{name:'name', order: 'asc'}],
 }
 
-export default function rootReducer(state = initalState, action) {  
+export default function rootReducer(state = initalState, action) { 
   switch (action.type) {
     case actions.SORT_COLUMN:
-      const sortorders = setSortOrder(state.sorts, action.columnSortInfo);
-      state.sorts = sortorders;
-      state.rows = sortHelper(state.rows, ...getSortOrder(sortorders));
+      const sortorders = setSortOrder([...state.sorts], action.columnSortInfo);
+
+      return {
+        rows: sortHelper([...state.rows], ...getSortOrder),
+        sorts: [...sortorders]
+      }
+
     default:
-      state = state;
+      return state;
   }
-  console.log('rootReducer.js: rootReducer called => ', 'store state=', state, 'action=', action);
-  return {...state};
 }
