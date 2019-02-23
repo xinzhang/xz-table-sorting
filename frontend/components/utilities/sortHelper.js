@@ -32,7 +32,7 @@ function dynamicSortMultiple() {
   }
 }
 
-export default function sorter(rows, ...columns) {  
+export default function sorter(rows, ...columns) {
   rows.sort(dynamicSortMultiple(...columns));  
   return rows;
 }

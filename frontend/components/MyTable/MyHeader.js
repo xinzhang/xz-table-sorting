@@ -38,8 +38,10 @@ function mapStateToProps(state, ownProps) {
 
   let icon = 'sort';
 
-  if (sorts[name]) {
-    icon = `sort-${sorts[name]}`;
+  const item = sorts.find( x=> x.name === name);
+
+  if (item) {
+    icon = `sort-${item.order}`;
   }
   return {
     sorts,
