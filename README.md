@@ -23,11 +23,11 @@ Runn `npm run test` to test
 
 2) With click the columns
 
-![Table Sample](/images/results/keybard_sortorder.png)
+![Table Sample](/images/results/multiple_sort.png)
 
 3) With Ctrl or Alt pressed, reorder the sort columns
 
-![Table Sample](/images/results/multiple_sort.png)
+![Table Sample](/images/results/keybard_sortorder.png)
 
 ## To do furthur ##
 - update the mock data to use json file
