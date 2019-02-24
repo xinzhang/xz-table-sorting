@@ -40,7 +40,7 @@ export class MyTable extends React.Component {
     const {column, rows} = this.props;
     return (
       <div>      
-      <TestComponent column={column} /> 
+      {/* <TestComponent column={column} />  */}
       <Table.Provider
          className="table table-striped table-bordered"
          columns={columns} >
