@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { sortColumn } from 'store/actions/sortActions';
+import { sortColumn, orderSortColumn} from 'store/actions/sortActions';
 import {bindActionCreators} from 'redux';
 import MSGlyphicon from 'MSGlyphicon/MSGlyphicon.js';
 
@@ -12,7 +12,17 @@ class MyHeader extends React.Component {
   }
 
   columnClick() {
-    this.props.sortColumn(this.props.name);
+
+    (this.props.order_ordinal_status === 'stop') ? 
+      this.props.sortColumn(this.props.name)
+      : this.props.orderSortColumn(this.props.name);
+
+
+    // if (this.props.order_ordinal_status === 'stop') {
+    //   this.props.sortColumn(this.props.name);
+    // } else {
+    // this.props.orderSortColumn(this.props.name);
+    
   }
 
   render() {
@@ -21,6 +31,9 @@ class MyHeader extends React.Component {
       <lable onClick={this.columnClick}>
         {name}        
         <MSGlyphicon glyph={icon} className="4x" style={{marginLeft: '10px'}} />
+        { this.props.order_ordinal_status !== 'stop' && this.props.orderOrdinal > 0 && (
+          <span style={{marginLeft: '10px', fontSize: '1em', color: 'red'}}>{this.props.orderOrdinal}</span>
+        )}
       </lable>
     );
   }  
@@ -28,29 +41,32 @@ class MyHeader extends React.Component {
 
 MyHeader.defaultProps = {
   name: '',
-  icon: 'fa-sort', 
+  icon: 'fa-sort',
+  order_ordinal_status: 'stop',
+  orderOrdinal: -1,
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log("myheader mapStateToProps",  state);
-  const { sorts } = state.data;
+  const { sorts, order_ordinal_status } = state.data;
   const { name, style } = ownProps;
 
   let icon = 'sort';
 
-  const item = sorts.find( x=> x.name === name);
-
-  if (item) {
-    icon = `sort-${item.order}`;
+  const idx = sorts.findIndex( x=> x.name === name);
+  if (idx > -1) {    
+    icon = `sort-${sorts[idx].order}`;
   }
+
   return {
     sorts,
-    icon
+    icon,
+    order_ordinal_status,
+    orderOrdinal: idx + 1
   };
 }
 
 function mapDispatchToProps(dispatch) {  
-  return bindActionCreators({ sortColumn }, dispatch);
+  return bindActionCreators({ sortColumn, orderSortColumn}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyHeader);

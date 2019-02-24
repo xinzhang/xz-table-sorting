@@ -1,4 +1,7 @@
 export const SORT_COLUMN = 'SORT_COLUMN';
+export const START_ORDER_ORDINAL = 'START_ORDER_ORDINAL';
+export const STOP_ORDER_ORDINAL = 'STOP_ORDER_ORDINAL';
+export const ORDER_SORT_COLUMN = 'ORDER_SORT_COLUMN';
 
 /**
  * Keeps track of ads that have already been rendered
@@ -9,3 +12,17 @@ export const sortColumn = columnSortInfo => ({
   columnSortInfo,
 });
 
+export const orderSortColumn = columnSortInfo => ({
+  type: ORDER_SORT_COLUMN,
+  columnSortInfo,
+})
+
+export const startOrderOrdinal = () => ({
+  type: START_ORDER_ORDINAL,
+  order_ordinal_status : 'start',
+})
+
+export const stopOrderOrdinal = () => ({
+  type: START_ORDER_ORDINAL,
+  order_ordinal_status : 'stop',
+})
