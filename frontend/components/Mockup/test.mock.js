@@ -1,5 +1,5 @@
 export function POST(url, data, headers) {
-  console.log('test.mock.js: POST called', 'url=', url, 'data=', data);
+  
   return new Promise(function(resolve, reject) {
     if(data.username === 'user1' || data.username === 'user2') {
       resolve({
@@ -23,5 +23,11 @@ export function DELETE(url, data, headers) {
     reject({
       message: url + ': failed'
     });
+  });
+}
+
+export function GET(url, data, headers) {
+  return new Promise(function(resolve, reject) {
+    resolve(data);
   });
 }
