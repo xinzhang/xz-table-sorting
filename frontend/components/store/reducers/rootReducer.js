@@ -1,6 +1,6 @@
 import * as actions from 'store/actions/sortActions';
 import sortHelper from 'utilities/sortHelper';
-import rows from 'Mockup/people.js'
+//import rows from 'Mockup/people.js'
 
 //use addOrderType to decide how to make the sorts order
 // for single mouse click, addOrderType = 1,  make the order column primary
@@ -43,7 +43,7 @@ function getSortOrder(sorts) {
 
 //the order ordinal status will be start, inprogress, stop, default stop
 const initalState = {
-  rows: sortHelper(rows, 'name'),
+  rows: [],//sortHelper(rows, 'name'),
   sorts: [{name:'name', order: 'asc'}],
   order_ordinal_status: 'stop',
 }
@@ -77,11 +77,18 @@ export default function rootReducer(state = initalState, action) {
         ...state,
         order_ordinal_status: action.order_ordinal_status,
       }
+
     case actions.STOP_ORDER_ORDINAL:
       return {        
         rows: sortHelper([...state.rows], ...getSortOrder),
         sorts: state.sorts,
-        order_ordinal_status: 'stop'
+        order_ordinal_status: 'stop',
+      }
+
+    case actions.PEOPLE_DATA_UPDATED:
+      return {
+        ...state,
+        rows: action.rows,
       }
 
     default:

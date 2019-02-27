@@ -21,6 +21,11 @@ describe('Test Tables', function() {
   });
 
   it('MyTable is rendered properly', function() {
+    //add mock because table is using fetch
+    window.fetch = () => {
+      return new Promise();
+    };
+
     const table = mount(
       <Provider store={store}>
           <MyTable />
@@ -28,7 +33,7 @@ describe('Test Tables', function() {
     );
   });
 
-  it('MyTableHeader is rendered properly', function() {
+  it('MyTableHeader is rendered properly', function() {    
     const table = mount(
       <Provider store={store}>
           <MyHeader name="id" />

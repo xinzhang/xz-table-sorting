@@ -1,10 +1,11 @@
 import React from 'react';
 import * as Table from 'reactabular-table';
 import { connect } from 'react-redux';
-import { startOrderOrdinal,  stopOrderOrdinal} from 'store/actions/sortActions';
+import { startOrderOrdinal,  stopOrderOrdinal, updateRows} from 'store/actions/sortActions';
 import {bindActionCreators} from 'redux';
 import TestComponent from 'MyTable/TestComponent.js';
 import columns from './Columns.js';
+import { getPeople } from 'utilities/tableApi.js'
 
 export class MyTable extends React.Component {
 
@@ -13,12 +14,13 @@ export class MyTable extends React.Component {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   handleKeyDown(event) {
-    event.stopPropagation(); 
-    
-    if (event.ctrlKey || event.altKey) {      
+    event.stopPropagation();
+
+    if (event.ctrlKey || event.altKey) {
       this.props.startOrderOrdinal();
     }
   }
@@ -29,15 +31,21 @@ export class MyTable extends React.Component {
     }
   }
 
-  componentDidMount() {  
+  fetchData() {
+    const people = getPeople('production'); //use fetch
+    people.then(res => this.props.updateRows(res));
+  }
+
+  componentDidMount() {
     document.addEventListener("keyup", this.handleKeyUp);
     document.addEventListener("keydown", this.handleKeyDown);
-
+    this.fetchData();
   }
-  
+
   render() {
     const c = this.props.column;
     const {column, rows} = this.props;
+    
     return (
       <div>      
       {/* <TestComponent column={column} />  */}
@@ -50,7 +58,6 @@ export class MyTable extends React.Component {
       </div>
     );
   }
-
 }
 
 function mapStateToProps(state) {
@@ -60,8 +67,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {  
-  return bindActionCreators({ startOrderOrdinal, stopOrderOrdinal }, dispatch);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ startOrderOrdinal, stopOrderOrdinal, updateRows }, dispatch);  
 }
 
 MyTable.defaultProps = {
