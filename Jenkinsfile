@@ -1,10 +1,11 @@
 pipeline {
-  agent any
+  agent { docker { image 'node:6.3' } }
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t xz-test:1.0 .'
+        sh 'npm --version'
       }
     }
   }
 }
+
